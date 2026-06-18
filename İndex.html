@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔗 Kısa Link Oluşturucu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: #161b22;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 700px;
+            width: 100%;
+            border: 1px solid #30363d;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            color: #58a6ff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #8b949e;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .input-row input {
+            flex: 1;
+            padding: 12px 16px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            color: #c9d1d9;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+        
+        .input-row input:focus {
+            outline: none;
+            border-color: #58a6ff;
+        }
+        
+        .input-group textarea {
+            padding: 12px 16px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            color: #c9d1d9;
+            font-size: 0.95rem;
+            width: 100%;
+            min-height: 80px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            transition: border-color 0.2s;
+        }
+        
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #58a6ff;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: #238636;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2ea043;
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-generate {
+            background: #1f6feb;
+            color: white;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.2s;
+            min-width: 50px;
+        }
+        
+        .btn-generate:hover {
+            background: #388bfd;
+        }
+        
+        .btn-generate:active {
+            transform: scale(0.95);
+        }
+        
+        .result-box {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 1.5rem;
+            display: none;
+        }
+        
+        .result-box.show {
+            display: block;
+        }
+        
+        .result-box .label {
+            color: #8b949e;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+        
+        .result-box .link {
+            color: #58a6ff;
+            font-size: 1.1rem;
+            word-break: break-all;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .result-box .link a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        
+        .result-box .link a:hover {
+            text-decoration: underline;
+        }
+        
+        .btn-copy {
+            background: #1f6feb;
+            color: white;
+            padding: 6px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .btn-copy:hover {
+            background: #388bfd;
+        }
+        
+        .toast {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+            font-size: 0.95rem;
+        }
+        
+        .toast.show {
+            display: block;
+        }
+        
+        .toast.success {
+            background: #1f6feb33;
+            border: 1px solid #1f6feb;
+            color: #58a6ff;
+        }
+        
+        .toast.error {
+            background: #da363333;
+            border: 1px solid #da3633;
+            color: #f85149;
+        }
+        
+        .toast.info {
+            background: #1f6feb33;
+            border: 1px solid #58a6ff;
+            color: #58a6ff;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #30363d;
+            flex-wrap: wrap;
+        }
+        
+        .stats .stat {
+            color: #8b949e;
+            font-size: 0.85rem;
+        }
+        
+        .stats .stat span {
+            color: #c9d1d9;
+            font-weight: 600;
+        }
+        
+        .footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: #8b949e;
+            font-size: 0.8rem;
+        }
+        
+        .code-list {
+            margin-top: 1.5rem;
+            border-top: 1px solid #30363d;
+            padding-top: 1.5rem;
+        }
+        
+        .code-list h3 {
+            color: #8b949e;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        
+        .code-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: #0d1117;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            border: 1px solid #21262d;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .code-item .code {
+            color: #f0883e;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+        
+        .code-item .url {
+            color: #58a6ff;
+            font-size: 0.8rem;
+            word-break: break-all;
+            flex: 1;
+            margin: 0 10px;
+        }
+        
+        .code-item .btn-small {
+            background: #21262d;
+            color: #c9d1d9;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: background 0.2s;
+        }
+        
+        .code-item .btn-small:hover {
+            background: #30363d;
+        }
+        
+        .code-item .btn-small.delete {
+            color: #f85149;
+        }
+        
+        .code-item .btn-small.delete:hover {
+            background: #da3633;
+            color: white;
+        }
+        
+        .btn-export {
+            background: #1f6feb;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: background 0.2s;
+            width: 100%;
+        }
+        
+        .btn-export:hover {
+            background: #388bfd;
+        }
+        
+        .btn-export:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .code-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .code-item .url {
+                margin: 4px 0;
+            }
+            .input-row {
+                flex-direction: row;
+            }
+            .btn-generate {
+                font-size: 1rem;
+                padding: 12px 14px;
+                min-width: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 Kısa Link Oluşturucu</h1>
+        <p class="subtitle">GitHub JSON dosyalarınız için kısa link oluşturun</p>
+        
+        <div id="toast" class="toast"></div>
+        
+        <div class="input-group">
+            <div class="input-row">
+                <input type="text" id="codeInput" placeholder="Kısa kod (örn: 2T5AF8G)" />
+                <button class="btn-generate" id="generateBtn" onclick="generateCode()" title="7 haneli rastgele kod oluştur">🎲</button>
+            </div>
+            <textarea id="urlInput" placeholder="GitHub raw linki&#10;örnek: https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/welcome.json"></textarea>
+            <button class="btn btn-primary" id="addBtn" onclick="addLink()">➕ Link Ekle</button>
+        </div>
+        
+        <div class="result-box" id="resultBox">
+            <div class="label">✅ Link oluşturuldu!</div>
+            <div class="link">
+                <a href="#" id="resultLink" target="_blank">https://darkneslord.vercel.app/</a>
+                <button class="btn-copy" onclick="copyResult()">📋 Kopyala</button>
+            </div>
+        </div>
+        
+        <div class="code-list" id="codeList">
+            <h3>📋 Kayıtlı Linkler</h3>
+            <div id="linksContainer">
+                <div style="color:#8b949e;text-align:center;padding:20px;">Henüz link eklenmemiş</div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat">📦 Toplam: <span id="totalCount">0</span></div>
+            <div class="stat">🌐 Base URL: <span id="baseUrl">darkneslord.vercel.app</span></div>
+        </div>
+        
+        <button class="btn-export" onclick="exportToGitHub()">📤 Kod Oluştur (GitHub'a Ekle)</button>
+        
+        <div class="footer">
+            💡 Linkler tarayıcıda kaydedilir. <strong>Kod Oluştur</strong> ile GitHub'a ekleyin!
+        </div>
+    </div>
+    
+    <script>
+        // ===== KONFİGÜRASYON =====
+        const BASE_URL = 'https://darkneslord.vercel.app';
+        
+        // ===== 7 HANELİ KOD OLUŞTUR =====
+        function generateCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 7; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('codeInput').value = code;
+            showToast('🎲 Kod oluşturuldu: ' + code, 'info');
+            
+            // Otomatik olarak URL inputuna focus
+            document.getElementById('urlInput').focus();
+        }
+        
+        // ===== YEREL DEPOLAMA =====
+        function getLinks() {
+            try {
+                return JSON.parse(localStorage.getItem('shortLinks')) || {};
+            } catch {
+                return {};
+            }
+        }
+        
+        function saveLinks(links) {
+            localStorage.setItem('shortLinks', JSON.stringify(links));
+        }
+        
+        // ===== LİNK EKLE =====
+        function addLink() {
+            const codeInput = document.getElementById('codeInput');
+            const urlInput = document.getElementById('urlInput');
+            const code = codeInput.value.trim().toUpperCase();
+            const url = urlInput.value.trim();
+            
+            if (!code) {
+                showToast('⚠️ Lütfen bir kod girin veya 🎲 ile oluşturun', 'error');
+                return;
+            }
+            
+            if (!url) {
+                showToast('⚠️ Lütfen bir URL girin', 'error');
+                return;
+            }
+            
+            if (!url.startsWith('https://raw.githubusercontent.com/')) {
+                showToast('⚠️ Lütfen geçerli bir GitHub raw linki girin', 'error');
+                return;
+            }
+            
+            // Kaydet
+            const links = getLinks();
+            links[code] = url;
+            saveLinks(links);
+            
+            // Göster
+            showResult(code, url);
+            renderLinks();
+            
+            // Temizle
+            codeInput.value = '';
+            urlInput.value = '';
+            
+            showToast('✅ Link başarıyla eklendi!', 'success');
+        }
+        
+        // ===== SONUCU GÖSTER =====
+        function showResult(code, url) {
+            const box = document.getElementById('resultBox');
+            const link = document.getElementById('resultLink');
+            const fullUrl = `${BASE_URL}/${code}`;
+            link.href = fullUrl;
+            link.textContent = fullUrl;
+            box.classList.add('show');
+            
+            setTimeout(() => copyResult(), 500);
+        }
+        
+        // ===== KOPYALA =====
+        function copyResult() {
+            const link = document.getElementById('resultLink').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                showToast('📋 Kopyalandı!', 'info');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = link;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('📋 Kopyalandı!', 'info');
+            });
+        }
+        
+        // ===== TOAST =====
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast show ' + type;
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // ===== LİNKLERİ GÖSTER =====
+        function renderLinks() {
+            const container = document.getElementById('linksContainer');
+            const links = getLinks();
+            const entries = Object.entries(links);
+            
+            document.getElementById('totalCount').textContent = entries.length;
+            
+            if (entries.length === 0) {
+                container.innerHTML = '<div style="color:#8b949e;text-align:center;padding:20px;">Henüz link eklenmemiş</div>';
+                return;
+            }
+            
+            container.innerHTML = entries.map(([code, url]) => `
+                <div class="code-item">
+                    <span class="code">/${code}</span>
+                    <span class="url">${url}</span>
+                    <div style="display:flex;gap:6px;">
+                        <button class="btn-small" onclick="copyCode('${code}')">📋</button>
+                        <button class="btn-small delete" onclick="deleteCode('${code}')">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // ===== KOD KOPYALA =====
+        function copyCode(code) {
+            const fullUrl = `${BASE_URL}/${code}`;
+            navigator.clipboard.writeText(fullUrl).then(() => {
+                showToast(`📋 ${fullUrl} kopyalandı!`, 'success');
+            });
+        }
+        
+        // ===== KOD SİL =====
+        function deleteCode(code) {
+            if (!confirm(`"${code}" kodunu silmek istediğine emin misin?`)) return;
+            
+            const links = getLinks();
+            delete links[code];
+            saveLinks(links);
+            renderLinks();
+            showToast(`🗑️ ${code} silindi`, 'info');
+        }
+        
+        // ===== GITHUB KODU OLUŞTUR =====
+        function exportToGitHub() {
+            const links = getLinks();
+            const entries = Object.entries(links);
+            
+            if (entries.length === 0) {
+                showToast('⚠️ Kaydedilecek link yok', 'error');
+                return;
+            }
+            
+            let mapLines = entries.map(([code, url]) => 
+                `  "${code}": "${url}"`
+            ).join(',\n');
+            
+            const fullCode = `const MAP = {\n${mapLines}\n};\n\nexport default async function handler(req, res) {\n  const url = new URL(req.url, \`http://\${req.headers.host}\`);\n  const code = url.searchParams.get('code');\n  \n  if (!code) {\n    return res.status(400).json({ error: "Lütfen bir kod girin" });\n  }\n\n  const targetUrl = MAP[code];\n  \n  if (!targetUrl) {\n    return res.status(404).json({ error: "Bu kod bulunamadı" });\n  }\n\n  try {\n    const response = await fetch(targetUrl);\n    const data = await response.json();\n    res.status(200).json(data);\n  } catch (error) {\n    res.status(500).json({ error: "Bir hata oluştu" });\n  }\n}`;
+            
+            const win = window.open('', '_blank', 'width=700,height=500');
+            win.document.write(`
+                <html><head><title>📋 Kodu Kopyala</title>
+                <style>body{background:#0d1117;color:#c9d1d9;padding:20px;font-family:monospace;margin:0;}
+                h2{color:#58a6ff;}
+                pre{background:#161b22;padding:16px;border-radius:8px;overflow:auto;max-height:400px;font-size:12px;white-space:pre-wrap;word-break:break-all;}
+                .btn-group{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+                button{padding:10px 24px;border:none;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:600;}
+                .btn-copy{background:#238636;color:white;}
+                .btn-copy:hover{background:#2ea043;}
+                .btn-close{background:#21262d;color:#c9d1d9;}
+                .btn-close:hover{background:#30363d;}
+                .info{color:#8b949e;font-size:0.85rem;margin-bottom:12px;}
+                </style></head>
+                <body>
+                <h2>📋 Kodu Kopyala</h2>
+                <p class="info">Bu kodu GitHub'daki <strong>api/code.js</strong> dosyasına yapıştır:</p>
+                <pre id="codeBlock">${fullCode}</pre>
+                <div class="btn-group">
+                    <button class="btn-copy" onclick="copyCode()">📋 Kopyala</button>
+                    <button class="btn-close" onclick="window.close()">❌ Kapat</button>
+                </div>
+                <script>
+                function copyCode() {
+                    const code = document.getElementById('codeBlock').textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        alert('✅ Kod kopyalandı! Şimdi GitHub\'a yapıştır ve deploy et.');
+                    }).catch(() => {
+                        const ta = document.createElement('textarea');
+                        ta.value = code;
+                        document.body.appendChild(ta);
+                        ta.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(ta);
+                        alert('✅ Kod kopyalandı!');
+                    });
+                }
+                <\/script>
+                </body></html>
+            `);
+        }
+        
+        // ===== SAYFA YÜKLENDİ =====
+        document.getElementById('baseUrl').textContent = BASE_URL.replace('https://', '');
+        renderLinks();
+        
+        // ===== ENTER =====
+        document.getElementById('codeInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('urlInput').focus();
+            }
+        });
+        
+        document.getElementById('urlInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                addLink();
+            }
+        });
+    </script>
+</body>
+</html>
