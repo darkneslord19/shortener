@@ -1,7 +1,7 @@
 const MAP = {
   "1VSS1DG": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/Shortener.json",
   "2MOR1GS": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/welcome.json",
-  "SLP2FV5": "https://raw.githubusercontent.com/darkneslord19/shortener/refs/heads/main/%C4%B0ndex.html"
+  "SLP2FV5": "https://raw.githubusercontent.com/darkneslord19/shortener/refs/heads/main/index.html"
 };
 
 export default async function handler(req, res) {
