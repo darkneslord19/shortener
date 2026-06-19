@@ -3,7 +3,6 @@ const MAP = {
   "Z2VU9NT": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/welcome.json",
   "VO1WCJV": "https://raw.githubusercontent.com/darkneslord19/shortener/main/pastes/Mer.json",
   "PL06JI8": "https://raw.githubusercontent.com/darkneslord19/shortener/main/pastes/Met.json",
-  "GFGNSF8": "https://raw.githubusercontent.com/darkneslord19/shortener/main/pastes/Yet.json",
   "ZO143AB": "https://raw.githubusercontent.com/darkneslord19/shortener/main/pastes/Fat.json"
 };
 
