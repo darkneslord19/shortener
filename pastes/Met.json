@@ -1,0 +1,11 @@
+{
+  "ShowDate": "22/12/25",
+  "Title": "Update Available",
+  "Subtitle": "v4.5 • Critical Patch",
+  "WhatsNew": "• Upgrading Game Servers\n• Fixing Login Issues\n• New UI Added\n• Vpn Proxy Removed\n • Dialog By DPMods",
+  "Button1": "Update",
+  "Button1Url": "https://t.me/dp_mods",
+  "2Button": false,
+  "ShowTimer": false,
+  "TargetTime": "2025-12-30 18:00:00"
+}
