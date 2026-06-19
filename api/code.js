@@ -1,5 +1,6 @@
 const MAP = {
-  "YP06I5M": "https://raw.githubusercontent.com/darkneslord19/shortener/main/pastes/Mer.json"
+  "YP06I5M": "https://raw.githubusercontent.com/darkneslord19/shortener/main/pastes/Mer.json",
+  "KALI66V": "https://raw.githubusercontent.com/darkneslord19/shortener/main/pastes/Met.json"
 };
 
 export default async function handler(req, res) {
