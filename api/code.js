@@ -1,6 +1,7 @@
 const MAP = {
   "NU88U7I": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/Merhaba.json",
-  "Z2VU9NT": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/welcome.json"
+  "Z2VU9NT": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/welcome.json",
+  "NJUH2W9": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/damar.json"
 };
 
 export default async function handler(req, res) {
