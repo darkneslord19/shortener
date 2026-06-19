@@ -1,6 +1,5 @@
 const MAP = {
-  "3NSE64L": "https://raw.githubusercontent.com/darkneslord19/shortener/main/pastes/Mer.json",
-  "CGHHS97": "https://raw.githubusercontent.com/darkneslord19/shortener/main/pastes/Met.json"
+  "YP06I5M": "https://raw.githubusercontent.com/darkneslord19/shortener/main/pastes/Mer.json"
 };
 
 export default async function handler(req, res) {
