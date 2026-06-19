@@ -10,7 +10,8 @@ const MAP = {
   "QX4ZNOZ": "https://raw.githubusercontent.com/darkneslord19/shortener/main/pastes/Ger.json",
   "1UY9FMZ": "https://raw.githubusercontent.com/darkneslord19/shortener/main/pastes/Dark.json",
   "K3G0NOM": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/Point.json",
-  "1BZLIVL": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/Semer.json"
+  "1BZLIVL": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/Semer.json",
+  "KULA5X7": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/damar.json"
 };
 
 export default async function handler(req, res) {
