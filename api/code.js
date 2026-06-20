@@ -5,7 +5,8 @@ const MAP = {
   "WNYYPGN": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/Semer.json",
   "1AUPVDH": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/Point.json",
   "W7F57OF": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/Federasyon.json",
-  "4QDRUJF": "https://raw.githubusercontent.com/darkneslord19/pasteler/main/pastes/Dltest.json"
+  "4QDRUJF": "https://raw.githubusercontent.com/darkneslord19/pasteler/main/pastes/Dltest.json",
+  "LTMS479": "https://raw.githubusercontent.com/darkneslord19/darkneslord/main/pastes/Noel.json"
 };
 
 export default async function handler(req, res) {
